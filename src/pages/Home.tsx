@@ -1,17 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Product } from '../types';
 import { fetchProducts, fetchCategories, fetchProductsByCategory } from '../utils/api';
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
 
 const Home = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { addToCart, removeFromCart } = useCart();
 
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Fetch initial data
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -20,7 +32,7 @@ const Home = () => {
           fetchProducts(),
           fetchCategories(),
         ]);
-        setProducts(productsData);
+        setAllProducts(productsData);
         setCategories(categoriesData);
       } catch (err) {
         setError('Failed to load products');
@@ -33,13 +45,17 @@ const Home = () => {
     loadData();
   }, []);
 
+  // Fetch category products when category changes
   useEffect(() => {
     const loadCategoryProducts = async () => {
-      if (!selectedCategory) return;
+      if (!selectedCategory) {
+        setAllProducts(await fetchProducts());
+        return;
+      }
       try {
         setLoading(true);
         const productsData = await fetchProductsByCategory(selectedCategory);
-        setProducts(productsData);
+        setAllProducts(productsData);
       } catch (err) {
         setError('Failed to load category products');
         console.error(err);
@@ -51,7 +67,19 @@ const Home = () => {
     loadCategoryProducts();
   }, [selectedCategory]);
 
-  if (loading) {
+  // Filter products based on debounced search query
+  const filteredProducts = useMemo(() => {
+    if (!debouncedSearchQuery.trim()) return allProducts;
+    
+    const query = debouncedSearchQuery.toLowerCase();
+    return allProducts.filter(product => 
+      product.title.toLowerCase().includes(query) ||
+      product.description.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query)
+    );
+  }, [allProducts, debouncedSearchQuery]);
+
+  if (loading && allProducts.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
         <span className="loading loading-spinner loading-lg"></span>
@@ -69,9 +97,18 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Search products..."
+            className="input input-bordered w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <select
-          className="select select-bordered w-full max-w-xs"
+          className="select select-bordered w-full md:w-auto"
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
@@ -85,7 +122,7 @@ const Home = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
@@ -94,6 +131,11 @@ const Home = () => {
           />
         ))}
       </div>
+      {filteredProducts.length === 0 && (
+        <div className="text-center py-8">
+          <p className="text-lg">No products found</p>
+        </div>
+      )}
     </div>
   );
 };

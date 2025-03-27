@@ -1,5 +1,11 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Product, CartItem } from '../types';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { Product } from '../types';
+
+interface CartItem {
+  id: number;
+  quantity: number;
+  product: Product;
+}
 
 interface CartContextType {
   items: CartItem[];
@@ -12,45 +18,83 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({ children }: { children: ReactNode }) => {
+const STORAGE_KEY = 'cart_items';
+const SYNC_EVENT = 'cart_sync';
+
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem('cart');
-    return savedCart ? JSON.parse(savedCart) : [];
+    const savedItems = localStorage.getItem(STORAGE_KEY);
+    return savedItems ? JSON.parse(savedItems) : [];
   });
 
+  // Listen for cart sync events from other tabs
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items));
-  }, [items]);
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        setItems(JSON.parse(e.newValue));
+      }
+    };
+
+    const handleSyncEvent = (e: CustomEvent) => {
+      if (e.detail?.items) {
+        setItems(e.detail.items);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener(SYNC_EVENT, handleSyncEvent as EventListener);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener(SYNC_EVENT, handleSyncEvent as EventListener);
+    };
+  }, []);
+
+  // Save to localStorage and broadcast changes
+  const syncCart = (newItems: CartItem[]) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newItems));
+    // Broadcast to other tabs
+    window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { items: newItems } }));
+  };
 
   const addToCart = (product: Product) => {
-    setItems(currentItems => {
-      const existingItem = currentItems.find(item => item.product.id === product.id);
-      if (existingItem) {
-        return currentItems.map(item =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...currentItems, { id: product.id, product, quantity: 1 }];
+    setItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+      const newItems = existingItem
+        ? prevItems.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [...prevItems, { id: product.id, quantity: 1, product }];
+      
+      syncCart(newItems);
+      return newItems;
     });
   };
 
   const removeFromCart = (productId: number) => {
-    setItems(currentItems => currentItems.filter(item => item.product.id !== productId));
+    setItems((prevItems) => {
+      const newItems = prevItems.filter((item) => item.id !== productId);
+      syncCart(newItems);
+      return newItems;
+    });
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
     if (quantity < 1) return;
-    setItems(currentItems =>
-      currentItems.map(item =>
-        item.product.id === productId ? { ...item, quantity } : item
-      )
-    );
+    setItems((prevItems) => {
+      const newItems = prevItems.map((item) =>
+        item.id === productId ? { ...item, quantity } : item
+      );
+      syncCart(newItems);
+      return newItems;
+    });
   };
 
   const clearCart = () => {
     setItems([]);
+    syncCart([]);
   };
 
   const getTotal = () => {
