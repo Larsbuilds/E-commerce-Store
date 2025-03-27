@@ -15,10 +15,20 @@ export default {
       animation: {
         'fade-in': 'fade-in 0.3s ease-out forwards',
       },
+      direction: {
+        'rtl': 'rtl',
+        'ltr': 'ltr',
+      },
     },
   },
   plugins: [require("daisyui")],
   daisyui: {
     themes: ["light"],
+    rtl: true,
+    darkTheme: false,
+    base: true,
+    styled: true,
+    utils: true,
+    logs: true,
   },
 } 

@@ -5,18 +5,19 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
   const { items } = useCart();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+  const isRTL = i18n.language === 'ar';
 
   return (
-    <div className="navbar bg-base-100 shadow-lg" dir="ltr" style={{ direction: 'ltr' }}>
+    <div className="navbar bg-base-100 shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost text-xl">
             FAkestore
           </Link>
         </div>
-        <div className="flex-none gap-4 items-center" style={{ direction: 'ltr' }}>
+        <div className="flex-none gap-4 items-center">
           <LanguageSwitcher />
           <Link to="/cart" className="btn btn-ghost btn-circle">
             <div className="indicator">

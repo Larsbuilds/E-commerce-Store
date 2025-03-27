@@ -4,7 +4,6 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ErrorBoundary from './components/ErrorBoundary';
-import './i18n/config';
 
 function App() {
   return (

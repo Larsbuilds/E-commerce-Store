@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Product } from '../types';
 import { fetchProducts, fetchCategories, fetchProductsByCategory } from '../utils/api';
 import ProductCard from '../components/ProductCard';
@@ -14,7 +14,18 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { addToCart, removeFromCart } = useCart();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Debug translations
+  useEffect(() => {
+    console.log('Current language:', i18n.language);
+    console.log('Categories:', categories);
+    categories.forEach(category => {
+      const translationKey = `product.categories.${category}`;
+      const translation = t(translationKey);
+      console.log(`Translation for ${category} (${translationKey}):`, translation);
+    });
+  }, [categories, t, i18n.language]);
 
   // Debounce search query
   useEffect(() => {
@@ -37,7 +48,7 @@ const Home = () => {
         setAllProducts(productsData);
         setCategories(categoriesData);
       } catch (err) {
-        setError('Failed to load products');
+        setError(t('errors.fetchFailed'));
         console.error(err);
       } finally {
         setLoading(false);
@@ -45,13 +56,14 @@ const Home = () => {
     };
 
     loadData();
-  }, []);
+  }, [t]);
 
   // Fetch category products when category changes
   useEffect(() => {
     const loadCategoryProducts = async () => {
       if (!selectedCategory) {
-        setAllProducts(await fetchProducts());
+        const products = await fetchProducts();
+        setAllProducts(products);
         return;
       }
       try {
@@ -59,7 +71,7 @@ const Home = () => {
         const productsData = await fetchProductsByCategory(selectedCategory);
         setAllProducts(productsData);
       } catch (err) {
-        setError('Failed to load category products');
+        setError(t('errors.fetchFailed'));
         console.error(err);
       } finally {
         setLoading(false);
@@ -67,7 +79,7 @@ const Home = () => {
     };
 
     loadCategoryProducts();
-  }, [selectedCategory]);
+  }, [selectedCategory, t]);
 
   // Filter products based on debounced search query
   const filteredProducts = useMemo(() => {
@@ -126,7 +138,7 @@ const Home = () => {
               className={`btn ${selectedCategory === category ? 'btn-primary' : 'btn-ghost'}`}
               onClick={() => setSelectedCategory(category)}
             >
-              {category}
+              {t(`product.categories.${category}`)}
             </button>
           ))}
         </div>

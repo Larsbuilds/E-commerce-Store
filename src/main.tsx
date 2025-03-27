@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './i18n/config'
 import App from './App.tsx'
 import './index.css'
 import { I18nextProvider } from 'react-i18next'
