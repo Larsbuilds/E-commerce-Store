@@ -1,4 +1,5 @@
 import { Product } from '../types';
+import { memo, useCallback } from 'react';
 
 interface ProductCardProps {
   product: Product;
@@ -6,7 +7,11 @@ interface ProductCardProps {
   onRemoveFromCart: (productId: number) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemoveFromCart }) => {
+const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, onRemoveFromCart }) => {
+  const handleAddToCart = useCallback(() => {
+    onAddToCart(product);
+  }, [onAddToCart, product]);
+
   return (
     <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
       <figure className="px-4 pt-4">
@@ -14,6 +19,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemov
           src={product.image}
           alt={product.title}
           className="rounded-xl h-48 w-full object-contain transition-transform duration-300 hover:scale-105"
+          loading="lazy"
+          decoding="async"
         />
       </figure>
       <div className="card-body">
@@ -23,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemov
           <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
           <button
             className="btn btn-primary btn-sm transition-all duration-300 hover:scale-105 active:scale-95"
-            onClick={() => onAddToCart(product)}
+            onClick={handleAddToCart}
           >
             Add to Cart
           </button>
@@ -31,6 +38,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemov
       </div>
     </div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard; 

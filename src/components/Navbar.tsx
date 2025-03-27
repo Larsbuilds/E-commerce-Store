@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
   const { items } = useCart();
+  const { t } = useTranslation();
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -13,7 +16,8 @@ const Navbar = () => {
             FAkestore
           </Link>
         </div>
-        <div className="flex-none">
+        <div className="flex-none gap-4">
+          <LanguageSwitcher />
           <Link to="/cart" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
@@ -31,7 +35,9 @@ const Navbar = () => {
                 />
               </svg>
               {itemCount > 0 && (
-                <span className="badge badge-sm indicator-item">{itemCount}</span>
+                <span className="badge badge-sm indicator-item">
+                  {itemCount === 1 ? t('cart.item', { count: itemCount }) : t('cart.items', { count: itemCount })}
+                </span>
               )}
             </div>
           </Link>

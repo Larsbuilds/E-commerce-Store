@@ -1,0 +1,43 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "retry": "إعادة المحاولة",
+    "addToCart": "إضافة إلى السلة",
+    "removeFromCart": "إزالة من السلة",
+    "quantity": "الكمية",
+    "total": "المجموع",
+    "empty": "فارغ",
+    "search": "البحث عن المنتجات..."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "cart": "السلة",
+    "language": "اللغة",
+    "theme": "المظهر"
+  },
+  "product": {
+    "price": "السعر",
+    "category": "الفئة",
+    "description": "الوصف",
+    "rating": "التقييم",
+    "outOfStock": "نفذت الكمية",
+    "inStock": "متوفر"
+  },
+  "cart": {
+    "empty": "السلة فارغة",
+    "items": "{{count}} منتجات",
+    "item": "{{count}} منتج",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة",
+    "shipping": "الشحن",
+    "checkout": "إتمام الشراء",
+    "clear": "تفريغ السلة"
+  },
+  "errors": {
+    "fetchFailed": "فشل في جلب البيانات",
+    "networkError": "خطأ في الشبكة",
+    "serverError": "خطأ في الخادم",
+    "retryMessage": "يرجى المحاولة مرة أخرى لاحقاً"
+  }
+} 

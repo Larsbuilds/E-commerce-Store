@@ -3,19 +3,23 @@ import { CartProvider } from './context/CartContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
+import ErrorBoundary from './components/ErrorBoundary';
+import './i18n/config';
 
 function App() {
   return (
-    <Router basename="/FAkestore">
-      <CartProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="cart" element={<Cart />} />
-          </Route>
-        </Routes>
-      </CartProvider>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="cart" element={<Cart />} />
+            </Route>
+          </Routes>
+        </CartProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
 

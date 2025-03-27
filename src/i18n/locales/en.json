@@ -1,0 +1,43 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "addToCart": "Add to Cart",
+    "removeFromCart": "Remove from Cart",
+    "quantity": "Quantity",
+    "total": "Total",
+    "empty": "Empty",
+    "search": "Search products..."
+  },
+  "nav": {
+    "home": "Home",
+    "cart": "Cart",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "product": {
+    "price": "Price",
+    "category": "Category",
+    "description": "Description",
+    "rating": "Rating",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock"
+  },
+  "cart": {
+    "empty": "Your cart is empty",
+    "items": "{{count}} items",
+    "item": "{{count}} item",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "shipping": "Shipping",
+    "checkout": "Proceed to Checkout",
+    "clear": "Clear Cart"
+  },
+  "errors": {
+    "fetchFailed": "Failed to fetch data",
+    "networkError": "Network error",
+    "serverError": "Server error",
+    "retryMessage": "Please try again later"
+  }
+} 
