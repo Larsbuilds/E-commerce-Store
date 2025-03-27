@@ -1,5 +1,6 @@
 import { Product } from '../types';
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ProductCardProps {
   product: Product;
@@ -8,6 +9,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, onRemoveFromCart }) => {
+  const { t } = useTranslation();
   const handleAddToCart = useCallback(() => {
     onAddToCart(product);
   }, [onAddToCart, product]);
@@ -32,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart, on
             className="btn btn-primary btn-sm transition-all duration-300 hover:scale-105 active:scale-95"
             onClick={handleAddToCart}
           >
-            Add to Cart
+            {t('common.addToCart')}
           </button>
         </div>
       </div>

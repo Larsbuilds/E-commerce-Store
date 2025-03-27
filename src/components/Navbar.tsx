@@ -9,14 +9,14 @@ const Navbar = () => {
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="navbar bg-base-100 shadow-lg">
-      <div className="container mx-auto">
+    <div className="navbar bg-base-100 shadow-lg" dir="ltr" style={{ direction: 'ltr' }}>
+      <div className="container mx-auto px-4">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost text-xl">
             FAkestore
           </Link>
         </div>
-        <div className="flex-none gap-4">
+        <div className="flex-none gap-4 items-center" style={{ direction: 'ltr' }}>
           <LanguageSwitcher />
           <Link to="/cart" className="btn btn-ghost btn-circle">
             <div className="indicator">

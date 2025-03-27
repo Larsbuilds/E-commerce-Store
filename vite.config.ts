@@ -16,9 +16,10 @@ export default defineConfig({
   ],
   base: '/',
   server: {
-    port: 5173,
+    port: 3000,
     strictPort: true,
-    host: true
+    host: true,
+    hmr: false // Temporarily disable HMR
   },
   build: {
     target: 'esnext',
