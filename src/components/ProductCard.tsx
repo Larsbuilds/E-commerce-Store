@@ -9,7 +9,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = memo(({ product, onAddToCart }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   
   const handleAddToCart = useCallback(() => {
     onAddToCart(product);

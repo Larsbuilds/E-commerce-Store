@@ -5,9 +5,8 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
   const { items } = useCart();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
-  const isRTL = i18n.language === 'ar';
 
   return (
     <div className="navbar bg-base-100 shadow-lg">
