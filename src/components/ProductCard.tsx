@@ -1,3 +1,4 @@
+import React from 'react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -6,7 +7,7 @@ interface ProductCardProps {
   onRemoveFromCart: (productId: number) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemoveFromCart }) => {
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCart, onRemoveFromCart }) => {
   return (
     <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
       <figure className="px-4 pt-4">
@@ -14,6 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemov
           src={product.image}
           alt={product.title}
           className="rounded-xl h-48 w-full object-contain transition-transform duration-300 hover:scale-105"
+          loading="lazy"
         />
       </figure>
       <div className="card-body">
@@ -31,6 +33,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onRemov
       </div>
     </div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard; 

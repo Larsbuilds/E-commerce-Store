@@ -67,6 +67,15 @@ const Home = () => {
     loadCategoryProducts();
   }, [selectedCategory]);
 
+  // Memoized event handlers
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  }, []);
+
+  const handleCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
+  }, []);
+
   // Filter products based on debounced search query
   const filteredProducts = useMemo(() => {
     if (!debouncedSearchQuery.trim()) return allProducts;
@@ -104,13 +113,13 @@ const Home = () => {
             placeholder="Search products..."
             className="input input-bordered w-full"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
           />
         </div>
         <select
           className="select select-bordered w-full md:w-auto"
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={handleCategoryChange}
         >
           <option value="">All Categories</option>
           {categories.map((category) => (

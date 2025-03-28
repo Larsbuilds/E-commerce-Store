@@ -1,4 +1,4 @@
-# FAkestore
+# E-Com Store
 
 A modern e-commerce application built with React, TypeScript, and Tailwind CSS. This project uses the FakeStore API to display products and manage a shopping cart.
 
@@ -32,8 +32,8 @@ A modern e-commerce application built with React, TypeScript, and Tailwind CSS. 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/FAkestore.git
-cd FAkestore
+git clone https://github.com/yourusername/e-com-store.git
+cd e-com-store
 ```
 
 2. Install dependencies:

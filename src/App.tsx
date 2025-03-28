@@ -6,7 +6,7 @@ import Cart from './pages/Cart';
 
 function App() {
   return (
-    <Router basename="/FAkestore">
+    <Router>
       <CartProvider>
         <Routes>
           <Route path="/" element={<Layout />}>

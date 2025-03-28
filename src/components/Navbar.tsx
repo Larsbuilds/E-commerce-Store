@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="container mx-auto">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost text-xl">
-            FAkestore
+            E-Com Store
           </Link>
         </div>
         <div className="flex-none">

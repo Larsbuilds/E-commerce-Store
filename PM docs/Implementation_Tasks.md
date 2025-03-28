@@ -1,6 +1,12 @@
 # Implementation Tasks
 after updating the tasks, also update related tasks in PM docs/Project plan.md
 
+To use this plan effectively:
+1. Mark tasks as complete by changing [ ] to [x]
+2. Update the Progress Tracking section as you move through phases
+3. Add new subtasks as needed while maintaining the existing structure
+4. Keep the Additional Considerations section updated with any new requirements or challenges
+
 ## Priority Categories
 - 🔴 MUST: Critical for core functionality
 - 🟡 SHOULD: Important for user experience
