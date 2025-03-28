@@ -1,5 +1,6 @@
 import { Product } from '../types';
 import { cache } from './cache';
+import { withRetry } from './retry';
 
 const BASE_URL = 'https://fakestoreapi.com';
 
@@ -9,6 +10,16 @@ const CACHE_KEYS = {
   PRODUCTS_BY_CATEGORY: (category: string) => `products_category_${category}`,
 };
 
+const fetchWithRetry = async <T>(url: string): Promise<T> => {
+  return withRetry(async () => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.statusText}`);
+    }
+    return response.json();
+  });
+};
+
 export const fetchProducts = async (): Promise<Product[]> => {
   // Check cache first
   const cachedProducts = cache.get<Product[]>(CACHE_KEYS.PRODUCTS);
@@ -16,12 +27,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
     return cachedProducts;
   }
 
-  const response = await fetch(`${BASE_URL}/products`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch products');
-  }
-
-  const products = await response.json();
+  const products = await fetchWithRetry<Product[]>(`${BASE_URL}/products`);
   
   // Cache the results
   cache.set(CACHE_KEYS.PRODUCTS, products);
@@ -36,12 +42,7 @@ export const fetchCategories = async (): Promise<string[]> => {
     return cachedCategories;
   }
 
-  const response = await fetch(`${BASE_URL}/products/categories`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch categories');
-  }
-
-  const categories = await response.json();
+  const categories = await fetchWithRetry<string[]>(`${BASE_URL}/products/categories`);
   
   // Cache the results
   cache.set(CACHE_KEYS.CATEGORIES, categories);
@@ -50,16 +51,7 @@ export const fetchCategories = async (): Promise<string[]> => {
 };
 
 export const fetchProductById = async (id: number): Promise<Product> => {
-  try {
-    const response = await fetch(`${BASE_URL}/products/${id}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch product');
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching product:', error);
-    throw error;
-  }
+  return fetchWithRetry<Product>(`${BASE_URL}/products/${id}`);
 };
 
 export const fetchProductsByCategory = async (category: string): Promise<Product[]> => {
@@ -71,12 +63,9 @@ export const fetchProductsByCategory = async (category: string): Promise<Product
     return cachedProducts;
   }
 
-  const response = await fetch(`${BASE_URL}/products/category/${encodeURIComponent(category)}`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch products by category');
-  }
-
-  const products = await response.json();
+  const products = await fetchWithRetry<Product[]>(
+    `${BASE_URL}/products/category/${encodeURIComponent(category)}`
+  );
   
   // Cache the results
   cache.set(cacheKey, products);

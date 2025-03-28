@@ -1,0 +1,99 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "addToCart": "Add to Cart",
+    "removeFromCart": "Remove from Cart",
+    "quantity": "Quantity",
+    "total": "Total",
+    "empty": "Empty",
+    "search": "Search products..."
+  },
+  "nav": {
+    "home": "Home",
+    "cart": "Cart",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "product": {
+    "price": "Price",
+    "category": "Category",
+    "description": "Description",
+    "rating": "Rating",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock",
+    "categories": {
+      "electronics": "Electronics",
+      "jewelery": "Jewelry",
+      "men's clothing": "Men's Clothing",
+      "women's clothing": "Women's Clothing"
+    },
+    "data": {
+      "rings": {
+        "title": "Silver Dragon Design Ring",
+        "description": "Elegant silver ring with dragon design, perfect for any occasion."
+      },
+      "bracelets": {
+        "title": "Gold Plated Bracelet",
+        "description": "Stylish gold plated bracelet with modern design."
+      },
+      "earrings": {
+        "title": "Rose Gold Earrings",
+        "description": "Beautiful rose gold earrings with crystal details."
+      },
+      "necklaces": {
+        "title": "Diamond Heart Necklace",
+        "description": "Luxurious diamond heart necklace on a delicate chain."
+      },
+      "jackets": {
+        "title": "Mens Casual Jacket",
+        "description": "Comfortable and stylish casual jacket for everyday wear."
+      },
+      "shirts": {
+        "title": "Mens Cotton Shirt",
+        "description": "Classic cotton shirt with modern fit and style."
+      },
+      "dresses": {
+        "title": "Womens Summer Dress",
+        "description": "Light and breezy summer dress perfect for warm days."
+      },
+      "tops": {
+        "title": "Womens Casual Top",
+        "description": "Comfortable and fashionable casual top for any occasion."
+      },
+      "laptops": {
+        "title": "MacBook Pro",
+        "description": "Powerful laptop with high-performance processor and stunning display."
+      },
+      "smartphones": {
+        "title": "iPhone 13",
+        "description": "Latest smartphone with advanced camera system and powerful performance."
+      },
+      "headphones": {
+        "title": "Wireless Headphones",
+        "description": "High-quality wireless headphones with noise cancellation."
+      },
+      "tablets": {
+        "title": "iPad Pro",
+        "description": "Versatile tablet perfect for work and entertainment."
+      }
+    }
+  },
+  "cart": {
+    "empty": "Your cart is empty",
+    "items": "{{count}} items",
+    "item": "{{count}} item",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "shipping": "Shipping",
+    "checkout": "Proceed to Checkout",
+    "clear": "Clear Cart"
+  },
+  "errors": {
+    "fetchFailed": "Failed to fetch data",
+    "networkError": "Network error",
+    "serverError": "Server error",
+    "retryMessage": "Please try again later"
+  }
+} 

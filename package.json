@@ -12,14 +12,24 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "i18next": "^24.2.3",
+    "i18next-browser-languagedetector": "^8.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.1",
     "react-router-dom": "^7.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__template": "^7.4.4",
+    "@types/babel__traverse": "^7.20.7",
+    "@types/history": "^4.7.11",
+    "@types/json-schema": "^7.0.15",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/react-router": "^5.1.20",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.7.2",
@@ -32,6 +42,7 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

@@ -1,0 +1,49 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "addToCart": "Ajouter au panier",
+    "removeFromCart": "Retirer du panier",
+    "quantity": "Quantité",
+    "total": "Total",
+    "empty": "Vide",
+    "search": "Rechercher des produits..."
+  },
+  "nav": {
+    "home": "Accueil",
+    "cart": "Panier",
+    "language": "Langue",
+    "theme": "Thème"
+  },
+  "product": {
+    "price": "Prix",
+    "category": "Catégorie",
+    "description": "Description",
+    "rating": "Note",
+    "outOfStock": "En rupture de stock",
+    "inStock": "En stock",
+    "categories": {
+      "electronics": "Électronique",
+      "jewelery": "Bijoux",
+      "men's clothing": "Vêtements pour hommes",
+      "women's clothing": "Vêtements pour femmes"
+    }
+  },
+  "cart": {
+    "empty": "Votre panier est vide",
+    "items": "{{count}} articles",
+    "item": "{{count}} article",
+    "subtotal": "Sous-total",
+    "tax": "Taxe",
+    "shipping": "Livraison",
+    "checkout": "Procéder au paiement",
+    "clear": "Vider le panier"
+  },
+  "errors": {
+    "fetchFailed": "Échec de la récupération des données",
+    "networkError": "Erreur réseau",
+    "serverError": "Erreur serveur",
+    "retryMessage": "Veuillez réessayer plus tard"
+  }
+} 
