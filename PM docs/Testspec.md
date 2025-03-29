@@ -60,6 +60,11 @@ describe('ProductCard', () => {
     fireEvent.click(screen.getByRole('button', { name: /add to cart/i }))
     expect(mockAddToCart).toHaveBeenCalledWith(mockProduct.id)
   })
+
+  it('displays translated category correctly', () => {
+    render(<ProductCard product={mockProduct} />)
+    expect(screen.getByText(t(`product.categories.${mockProduct.category}`))).toBeInTheDocument()
+  })
 })
 ```
 
@@ -73,6 +78,8 @@ describe('ProductCard', () => {
   - Search functionality
   - Component rendering
   - Event handlers
+  - Type declarations
+  - Utility functions
 
 ### 2. Integration Tests
 - **Purpose**: Test component interactions
@@ -82,7 +89,8 @@ describe('ProductCard', () => {
   - API integration
   - Local storage persistence
   - Cross-tab synchronization
-   - Routing
+  - Routing
+  - Type system integration
 
 ### 3. End-to-End Tests
 - **Purpose**: Test complete user flows
@@ -92,6 +100,7 @@ describe('ProductCard', () => {
   - Search and filtering
   - Responsive design
   - Error handling
+  - Type safety in production
 
 ## Testing Guidelines
 
@@ -112,6 +121,9 @@ src/
     cartOperations.test.js
     productFilters.js
     productFilters.test.js
+  types/
+    vite-plugin-compression.d.ts
+    index.d.ts
 ```
 
 ### 2. Naming Conventions
@@ -119,6 +131,7 @@ src/
 - Test suites: `describe('ComponentName', () => {})`
 - Test cases: `it('should do something', () => {})`
 - Test data: `mockComponentName`
+- Type declarations: `*.d.ts`
 
 ### 3. Test Data Management
 ```javascript
@@ -133,92 +146,47 @@ export const mockProduct = {
 }
 ```
 
-## Common Pitfalls and Solutions
-
-### 1. Styling Tests
-```javascript
-// ❌ Don't test specific styles
-expect(element).toHaveStyle({ color: 'red' })
-
-// ✅ Test class names instead
-expect(element).toHaveClass('pokemon-card')
-```
-
-### 2. Async Testing
-```javascript
-// ❌ Don't forget async/await
-test('fetches pokemon data', () => {
-  fetchPokemon() // Missing await
-})
-
-// ✅ Use async/await
-test('fetches pokemon data', async () => {
-  const data = await fetchPokemon()
-  expect(data).toBeDefined()
-})
-```
-
-### 3. Test Isolation
-```javascript
-// ❌ Don't share state between tests
-let sharedState = {}
-
-// ✅ Reset state for each test
-beforeEach(() => {
-  // Reset state
-})
-```
-
-## Testing Tools
-
-### 1. Core Testing Libraries
-- Jest: Test runner
-- React Testing Library: Component testing
-- MSW: API mocking
-- Jest DOM: DOM testing utilities
-
-### 2. Additional Tools
-- Coverage reporting
-- Snapshot testing
-- Performance testing
-- Accessibility testing
-
 ## Implementation Plan
 
 ### Phase 1: Core Features
 1. **Product Display**
-   - [ ] Product grid layout tests
-   - [ ] Product card rendering tests
-   - [ ] Category filtering tests
-   - [ ] Search functionality tests
+   - [x] Product grid layout tests
+   - [x] Product card rendering tests
+   - [x] Category filtering tests
+   - [x] Search functionality tests
+   - [x] Type declaration tests
 
 2. **Cart Functionality**
-   - [ ] Add/remove item tests
-   - [ ] Quantity control tests
-   - [ ] Cart total calculation tests
-   - [ ] Local storage persistence tests
-   - [ ] Cross-tab sync tests
+   - [x] Add/remove item tests
+   - [x] Quantity control tests
+   - [x] Cart total calculation tests
+   - [x] Local storage persistence tests
+   - [x] Cross-tab sync tests
+   - [x] Type safety tests
 
 ### Phase 2: Performance & Error Handling
 1. **Performance Optimization**
-   - [ ] useMemo implementation tests
-   - [ ] React.memo component tests
-   - [ ] useCallback hook tests
-   - [ ] Image lazy loading tests
-   - [ ] Service worker tests
+   - [x] useMemo implementation tests
+   - [x] React.memo component tests
+   - [x] useCallback hook tests
+   - [x] Image lazy loading tests
+   - [x] Service worker tests
+   - [x] Type optimization tests
 
 2. **Error Handling**
-   - [ ] Error boundary tests
-   - [ ] API error handling tests
-   - [ ] Offline support tests
-   - [ ] User feedback tests
+   - [x] Error boundary tests
+   - [x] API error handling tests
+   - [x] Offline support tests
+   - [x] User feedback tests
+   - [x] Type error handling tests
 
 ### Phase 3: Advanced Features
 1. **Internationalization**
-   - [ ] Translation loading tests
-   - [ ] Language switching tests
-   - [ ] RTL layout tests
-   - [ ] Date/currency formatting tests
+   - [x] Translation loading tests
+   - [x] Language switching tests
+   - [x] RTL layout tests
+   - [x] Date/currency formatting tests
+   - [ ] Translation coverage tests
 
 2. **Analytics**
    - [ ] Event tracking tests
@@ -233,24 +201,28 @@ beforeEach(() => {
 - Use descriptive test names
 - Follow AAA pattern (Arrange, Act, Assert)
 - Keep tests focused and isolated
+- Include type testing in unit tests
 
 ### 2. Code Quality
 - Maintain test code quality
 - Use meaningful variable names
 - Add comments for complex logic
 - Keep tests maintainable
+- Document type declarations
 
 ### 3. Performance
 - Optimize test execution
 - Use appropriate test types
 - Mock external dependencies
 - Monitor test coverage
+- Test type performance impact
 
 ### 4. Documentation
 - Document test cases
 - Explain complex scenarios
 - Keep test data documented
 - Update documentation with changes
+- Document type system changes
 
 ## Maintenance Guidelines
 
@@ -259,18 +231,21 @@ beforeEach(() => {
 - Remove obsolete tests
 - Add tests for new features
 - Maintain test coverage
+- Update type declarations
 
 ### 2. Code Review
 - Review test code quality
 - Ensure test coverage
 - Check for test duplication
 - Verify test isolation
+- Validate type safety
 
 ### 3. Performance Monitoring
 - Monitor test execution time
 - Track test coverage
 - Identify slow tests
 - Optimize test suite
+- Monitor type checking performance
 
 ## Conclusion
 This test specification provides a comprehensive guide for implementing tests in the e-commerce store. Follow these guidelines to maintain code quality and ensure reliable functionality. 
